@@ -1,4 +1,4 @@
-package info.anth.firebaseauth;
+package info.anth.firebaseauth2;
 
 import org.junit.Test;
 
