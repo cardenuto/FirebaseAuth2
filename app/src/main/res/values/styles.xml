@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- TODO: (Optional) Adjust for your theme -->
+    <!-- Dialog Theme. -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <!-- Remove title from window. -->
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>

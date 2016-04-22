@@ -1,11 +1,13 @@
-package info.anth.firebaseauth;
+package info.anth.firebaseauth2.Login;
 
+import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.firebase.client.AuthData;
@@ -14,26 +16,45 @@ import com.firebase.ui.auth.core.AuthProviderType;
 import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
 
-// Note: FirebaseLoginBaseActivity extends AppCompatActivity the original extends
-public class MainActivity extends FirebaseLoginBaseActivity {
+import info.anth.firebaseauth2.R;
+
+public class LoginActivity extends FirebaseLoginBaseActivity {
+
+    public static final int RESULT_REQUEST_CODE = 1;
 
     public static String TAG = "ajc";
     private Firebase mRef;
     private String mName;
+    private LoginRegisterDialog loginRegisterDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         mRef = new Firebase(getResources().getString(R.string.FIREBASE_BASE_REF));
-    }
 
+        // set login button listener
+        Button buttonLogin = (Button) findViewById(R.id.activity_login);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickLogin();
+            }
+        });
+
+        // set cancel button listener
+        Button buttonCancel = (Button) findViewById(R.id.activity_cancel);
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clickCancel();
+            }
+        });
+
+    }
     @Override
     protected void onStart() {
         super.onStart();
         logout();
-        //mRef.unauth();
         //setEnabledAuthProvider(AuthProviderType.FACEBOOK);
         //setEnabledAuthProvider(AuthProviderType.TWITTER);
         setEnabledAuthProvider(AuthProviderType.GOOGLE);
@@ -41,6 +62,8 @@ public class MainActivity extends FirebaseLoginBaseActivity {
 
         if (mRef.getAuth() == null) showFirebaseLoginPrompt();
         Log.i(TAG, "Auth: " + String.valueOf(mRef.getAuth()));
+
+        loginRegisterDialog = new LoginRegisterDialog();
     }
 
     @Override
@@ -56,16 +79,19 @@ public class MainActivity extends FirebaseLoginBaseActivity {
                 break;
         }
 
-        //invalidateOptionsMenu();
-        //mRecycleViewAdapter.notifyDataSetChanged();
+        // Check for intent for result (if called by startActivity getCallingActivity is null, called by startActivityForResult is NOT null)
+        if (getCallingActivity() != null) {
+            Intent returnIntent = new Intent();
+            //returnIntent.putExtra("result", result);
+            setResult(Activity.RESULT_OK, returnIntent);
+        }
+        finish();
     }
 
     @Override
     public void onFirebaseLoggedOut() {
-        Log.i(TAG, "Logged out: " + mName);
+        Log.i(TAG, "Logged out: ");
         mName = "";
-        //invalidateOptionsMenu();
-        //mRecycleViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -84,7 +110,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(context, text, duration);
-        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
         //Toast.makeText(getApplicationContext(), firebaseError.message, Toast.LENGTH_LONG).show();
@@ -97,7 +123,25 @@ public class MainActivity extends FirebaseLoginBaseActivity {
         return mRef;
     }
 
+    // Create a new account
     public void createAccount(View view){
-        Log.i(TAG, "Create Account");
+        dismissFirebaseLoginPrompt();
+        loginRegisterDialog.show(getFragmentManager(),"");
     }
+
+    // Return to login dialog when back button is pressed
+    public void clickLogin(){
+        showFirebaseLoginPrompt();
+    }
+
+    // Cancel activity - no login
+    public void clickCancel(){
+        // Check for intent for result (if called by startActivity getCallingActivity is null, called by startActivityForResult is NOT null)
+        if (getCallingActivity() != null) {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+        }
+        finish();
+    }
+
 }

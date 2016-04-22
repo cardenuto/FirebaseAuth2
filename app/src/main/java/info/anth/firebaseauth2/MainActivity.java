@@ -1,34 +1,16 @@
 package info.anth.firebaseauth2;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.firebase.ui.auth.core.AuthProviderType;
-import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
-import com.firebase.ui.auth.core.FirebaseLoginError;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignInApi;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import info.anth.firebaseauth2.Login.LoginActivity;
 
 // Note: FirebaseLoginBaseActivity extends AppCompatActivity the original extends
 public class MainActivity extends AppCompatActivity {
@@ -92,4 +74,18 @@ public class MainActivity extends AppCompatActivity {
     public void callLogout (View view) {
         mRef.unauth();
     }
+
+    public void callTestActivity (View view) {
+        //Intent intent = new Intent(this, LoginActivity.class);
+        //startActivity(intent);
+
+        startActivity(new Intent(this, TestActivity.class));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("ajc", "MainActivity onResume");
+    }
+
 }

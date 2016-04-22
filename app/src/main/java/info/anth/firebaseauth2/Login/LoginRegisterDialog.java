@@ -1,15 +1,12 @@
-package info.anth.firebaseauth2;
+package info.anth.firebaseauth2.Login;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +16,8 @@ import android.widget.Toast;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.ui.auth.core.AuthProviderType;
-import com.firebase.ui.auth.core.FirebaseLoginError;
-import com.firebase.ui.auth.core.FirebaseResponse;
+
+import info.anth.firebaseauth2.R;
 
 /**
  * Created by Primary on 4/20/2016.
