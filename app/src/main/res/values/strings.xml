@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Firebase Auth</string>
+    <string name="FIREBASE_BASE_REF">https://historicalsite.firebaseio.com</string>
+
+    <!-- Firebase login text -->
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_login">Login</string>
+    <string name="login_or">or</string>
+    <string name="login_facebook">Login with Facebook</string>
+    <string name="login_google">Login with Google</string>
+    <string name="login_twitter">Login with Twitter</string>
+    <string name="login_create">Create Account</string>
+
+</resources>
